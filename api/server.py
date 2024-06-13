@@ -1,8 +1,10 @@
 from flask import Flask, current_app, jsonify
-import json
+
+# import json
 from collections import defaultdict
-import requests
-import os
+
+# import requests
+# import os
 from vertretungs_backend import Vertretungsplan
 
 app = Flask(__name__)
