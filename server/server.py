@@ -1,4 +1,4 @@
-from flask import Flask, current_app, jsonify
+from flask import Flask, jsonify
 from vertretungs_backend import Vertretungsplan
 
 app = Flask(__name__)
@@ -11,4 +11,9 @@ urls = [
 
 @app.route("/")
 def index():
-    return jsonify(Vertretungsplan(urls[0]).get_dict_representation())
+    return jsonify(
+        {
+            "heute": Vertretungsplan(urls[0]).get_dict_representation(),
+            "morgen": Vertretungsplan(urls[1]).get_dict_representation(),
+        }
+    )
