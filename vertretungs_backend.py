@@ -72,10 +72,13 @@ class Vertretungsplan:
         self.stunden = dict(stunden)
 
     def get_dict_representation(self):
-        json = defaultdict(list)
+        json = defaultdict(lambda: defaultdict(list))
         for jahrgang, stunden in self.stunden.items():
             for stunde in stunden:
-                json[jahrgang].append(vars(stunde))
+                data = vars(stunde)
+                stunde = data["stunde"]
+                del data["stunde"]
+                json[jahrgang][stunde].append(data)
         return dict(json)
 
 
