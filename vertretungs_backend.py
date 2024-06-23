@@ -4,9 +4,10 @@ from dataclasses import dataclass
 from typing import List, Dict, Tuple
 from collections import defaultdict
 
+
 @dataclass
 class Stunde:
-    stunde: int
+    stunde: str
     lehrperson: Tuple[str, str]
     fach_: Tuple[str, str]
     raum: Tuple[str, str]
@@ -51,8 +52,8 @@ class Vertretungsplan:
         rows: ResultSet = main_table[0].find_all("tr")
         self.column_names = [x.text.strip().lower() for x in rows[0].find_all("th")]
         rows.pop(0)
-        row: Tag
         stunden = defaultdict(list)
+        row: Tag
         for row in rows:
             columns: ResultSet = row.find_all("td")
             if len(columns) != len(self.column_names):
@@ -61,15 +62,15 @@ class Vertretungsplan:
             klasse = columns[0].text
             columns.pop(0)
             args = {
-                "stunde": int(columns[0].text),
+                "stunde": columns[0].text,
                 "lehrperson": (columns[1].text.strip(), columns[2].text.strip()),
                 "fach_": (columns[3].text.strip(), columns[4].text.strip()),
                 "raum": (columns[5].text.strip(), columns[6].text.strip()),
                 "text": (columns[7].text.strip(), columns[8].text.strip()),
             }
             stunden[klasse].append(Stunde(**args))
-        self.stunden = dict(stunden)        
-        
+        self.stunden = dict(stunden)
+
     def get_dict_representation(self):
         json = defaultdict(list)
         for jahrgang, stunden in self.stunden.items():
@@ -77,11 +78,13 @@ class Vertretungsplan:
                 json[jahrgang].append(vars(stunde))
         return dict(json)
 
+
 if __name__ == "__main__":
     vertretungsplan = Vertretungsplan(url=urls[0])
     import json
+
     with open("aaa.json", "w") as f:
-        json.dump(vertretungsplan.get_dict_representation(), f,  indent=1)
+        json.dump(vertretungsplan.get_dict_representation(), f, indent=1)
     klasse = "12"
     print(f"Klasse {klasse}:")
     for stunde in vertretungsplan.stunden[klasse]:

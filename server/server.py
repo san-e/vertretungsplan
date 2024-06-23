@@ -11,6 +11,11 @@ urls = [
 
 @app.route("/")
 def index():
+    return api()
+
+
+@app.route("/api")
+def api():
     return jsonify(
         {
             "heute": Vertretungsplan(urls[0]).get_dict_representation(),
