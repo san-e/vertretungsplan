@@ -1,7 +1,9 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 from vertretungs_backend import Vertretungsplan
 
 app = Flask(__name__)
+CORS(app)
 
 urls = [
     "https://gesamtschule-waldbroel.de/wp/schueler/heute/subst_001.htm",
