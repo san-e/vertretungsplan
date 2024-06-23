@@ -34,7 +34,7 @@ class Stunde:
             return ""
 
     def fach_(self) -> str:
-        return self.fach_[0]
+        return self.fach[0]
 
     def raumwechsel(self) -> bool:
         return not self.raum[0] == self.raum[1]
@@ -78,7 +78,13 @@ class Vertretungsplan:
                 data = vars(stunde)
                 stunde = data["stunde"]
                 del data["stunde"]
-                json[jahrgang][stunde].append(data)
+                if "-" in stunde:
+                    stunde0 = stunde.split("-")[0].strip()
+                    stunde1 = stunde.split("-")[1].strip()
+                    for i in range(int(stunde0), int(stunde1) + 1):
+                        json[jahrgang][str(i)].append(data)
+                else:
+                    json[jahrgang][stunde].append(data)
         return dict(json)
 
 
