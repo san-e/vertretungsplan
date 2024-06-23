@@ -9,7 +9,7 @@ from collections import defaultdict
 class Stunde:
     stunde: str
     lehrperson: Tuple[str, str]
-    fach_: Tuple[str, str]
+    fach: Tuple[str, str]
     raum: Tuple[str, str]
     text: Tuple[str, str]
 
@@ -33,7 +33,7 @@ class Stunde:
         else:
             return ""
 
-    def fach(self) -> str:
+    def fach_(self) -> str:
         return self.fach_[0]
 
     def raumwechsel(self) -> bool:
@@ -64,7 +64,7 @@ class Vertretungsplan:
             args = {
                 "stunde": columns[0].text,
                 "lehrperson": (columns[1].text.strip(), columns[2].text.strip()),
-                "fach_": (columns[3].text.strip(), columns[4].text.strip()),
+                "fach": (columns[3].text.strip(), columns[4].text.strip()),
                 "raum": (columns[5].text.strip(), columns[6].text.strip()),
                 "text": (columns[7].text.strip(), columns[8].text.strip()),
             }
